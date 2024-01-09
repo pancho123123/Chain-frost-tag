@@ -1,0 +1,920 @@
+import pygame, random
+from random import randint
+
+WIDTH = 1200
+HEIGHT = 700
+BLACK = (0, 0, 0)
+WHITE = ( 255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255,0,0)
+BLUE = (0,0,255)
+BROWN = (50,20,30)
+
+pygame.init()
+pygame.mixer.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Chain Frost Tag")
+clock = pygame.time.Clock()
+
+def draw_text1(surface, text, size, x, y):
+	font = pygame.font.SysFont("serif", size)
+	text_surface = font.render(text, True, WHITE)
+	text_rect = text_surface.get_rect()
+	text_rect.midtop = (x, y)
+	surface.blit(text_surface, text_rect)
+
+def draw_text2(surface, text, size, x, y):
+	font = pygame.font.SysFont("serif", size)
+	text_surface = font.render(text, True, BLACK)
+	text_rect = text_surface.get_rect()
+	text_rect.midtop = (x, y)
+	surface.blit(text_surface, text_rect)
+
+def draw_hp_bar(surface, x, y, percentage):
+	BAR_LENGHT = 100
+	BAR_HEIGHT = 10
+	fill = (percentage / 100) * BAR_LENGHT
+	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
+	fill = pygame.Rect(x, y, fill, BAR_HEIGHT)
+	pygame.draw.rect(surface, GREEN, fill)
+	pygame.draw.rect(surface, WHITE, border, 2)
+
+def draw_hp_bar2(surface, x, y, percentage):
+	BAR_LENGHT = 100
+	BAR_HEIGHT = 10
+	fill = (percentage / 100) * BAR_LENGHT
+	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
+	fill = pygame.Rect(x, y, fill, BAR_HEIGHT)
+	pygame.draw.rect(surface, BROWN, fill)
+	pygame.draw.rect(surface, BROWN, border, 2)
+
+def draw_mana_bar(surface, x, y, percentage):
+	BAR_LENGHT = 100
+	BAR_HEIGHT = 10
+	fill = (percentage / 100) * BAR_LENGHT
+	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
+	fill = pygame.Rect(x, y, fill, BAR_HEIGHT)
+	pygame.draw.rect(surface, BLUE, fill)
+	pygame.draw.rect(surface, WHITE, border, 2)
+
+def distance(a,b):
+	#pitagoras distancia entre a y b
+	dx = b.rect.centerx - a.rect.centerx
+	dy = b.rect.centery - a.rect.centery
+	return (dx**2 + dy**2)**(1/2)
+
+def direction(a,b):
+	#vector unitario desde a a b
+	dx = b.rect.centerx - a.rect.centerx
+	dy = b.rect.centery - a.rect.centery
+	radio = (dx**2 + dy**2)**(1/2)
+	return dx/radio, dy/radio
+
+class Player(pygame.sprite.Sprite):
+	def __init__(self):
+		super().__init__()
+		self.image = pygame.transform.scale(pygame.image.load("img/terrorblade.png").convert(),(50,65))
+		self.image.set_colorkey(BLACK)
+		self.rect = self.image.get_rect()
+		self.hp = 1000
+		self.counter = True
+
+class Player1(Player):
+	def __init__(self):
+		super().__init__()
+		self.rect.x = 500
+		self.rect.y = 133
+
+	def update(self):
+		self.hp += 0.04
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.hp > 1000:
+			self.hp = 1000
+		self.speed_x = 0
+		self.speed_y = 0
+		keystate = pygame.key.get_pressed()
+		if keystate[pygame.K_a]:
+			self.speed_x = -3
+		if keystate[pygame.K_d]:
+			self.speed_x = 3
+		self.rect.x += self.speed_x
+		if keystate[pygame.K_w]:
+			self.speed_y = -3
+		if keystate[pygame.K_s]:
+			self.speed_y = 3
+		self.rect.y += self.speed_y
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+
+class Player2(Player):
+	def __init__(self):
+		super().__init__()
+		self.rect.x = 900
+		self.rect.y = 133
+				
+	def update(self):
+		self.hp += 0.04
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.hp > 1000:
+			self.hp = 1000
+		self.speed_x = 0
+		self.speed_y = 0
+		keystate = pygame.key.get_pressed()
+		if keystate[pygame.K_LEFT]:
+			self.speed_x = -3
+		if keystate[pygame.K_RIGHT]:
+			self.speed_x = 3
+		self.rect.x += self.speed_x
+		if keystate[pygame.K_UP]:
+			self.speed_y = -3
+		if keystate[pygame.K_DOWN]:
+			self.speed_y = 3
+		self.rect.y += self.speed_y
+		
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+
+class Penguin(pygame.sprite.Sprite):
+	def __init__(self):
+		super().__init__()
+		self.image = pygame.transform.scale(pygame.image.load("img/penguin.png").convert(),(65,65))
+		self.image.set_colorkey(BLACK)
+		self.rect = self.image.get_rect()
+		self.speedx = 0
+		self.speedy = 0
+		self.hp = 100
+		self.counter = True
+		self.rect.x = randint(300,1000)
+		self.rect.y =  randint(80,550)
+
+class Penguin1(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin2(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin3(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin4(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin5(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin6(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin7(Penguin):
+	def __init__(self):
+		super().__init__()
+
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin8(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Penguin9(Penguin):
+	def __init__(self):
+		super().__init__()
+		
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
+class Frost1(pygame.sprite.Sprite):
+
+	def __init__(self):
+		super().__init__()
+		self.image = frost_images[0]
+		self.image.set_colorkey(WHITE)
+		self.rect = self.image.get_rect()
+		self.rect.centerx = 700
+		self.rect.centery = 266
+		self.speed = 5
+		self.target = None
+		self.hit = True
+
+	def update(self):
+		#self.rect.x += self.speed
+		#self.rect.y += self.speed
+		if self.hit:
+			target_list = [player1, player2, penguin1, penguin2, penguin3, 
+			penguin4, penguin5, penguin6, penguin7, penguin8, penguin9]
+			target_list = [t for t in target_list if t.hp >0 and t is not self.target]
+			distance_list = [(distance(self,t),t) for t in target_list]
+			if len(distance_list)==0:
+				distance_list=[(0,self.target)]
+			self.target = sorted(distance_list, key=lambda x: x[0])[0][1]
+			self.hit = False
+		print(self.target)
+
+		#try:
+		if (self.target.rect.centerx - self.rect.centerx) == 0:
+			if self.target.rect.centery > self.rect.centery:
+				self.rect.centery += self.speed 
+			elif self.rect.centery > self.target.rect.centery:
+				self.rect.centery -= self.speed
+			else:
+				self.rect.centery += 0
+		elif (self.target.rect.centerx - self.rect.centerx) != 0:
+			x,y = direction(self, self.target)
+			self.rect.centerx += self.speed*x
+			self.rect.centery += self.speed*y
+
+def show_go_screen():
+	
+	screen.fill(BLACK)
+	draw_text1(screen, "Chain Frost Tag", 65, WIDTH // 2, HEIGHT // 4)
+	draw_text1(screen, "Avoid the Lich's Chain Frosts ", 20, WIDTH // 2, HEIGHT // 2)
+	draw_text1(screen, "Press Q", 20, WIDTH // 2, HEIGHT * 3/4)
+		
+	pygame.display.flip()
+	waiting = True
+	while waiting:
+		clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_q:
+					waiting = False
+
+
+frost_images = []
+frost_list = ["img/2.png", "img/3.png", "img/4.png" ,"img/5.png", "img/6.png", "img/7.png"]
+for img in frost_list:
+	frost_images.append(pygame.transform.scale(pygame.image.load(img).convert(),(25,30)))
+
+
+def show_game_over_screenp1():
+	screen.fill(BLACK)
+	#draw_text1(screen, "Qop", 65, WIDTH // 2, HEIGHT // 4)
+	draw_text1(screen, "Player 1 WINS", 20, WIDTH // 2, HEIGHT // 2)
+	draw_text1(screen, "Press Q", 20, WIDTH // 2, HEIGHT * 3/4)
+
+	pygame.display.flip()
+	waiting = True
+	while waiting:
+		clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_q:
+					waiting = False
+
+def show_game_over_screenp2():
+	screen.fill(BLACK)
+	#draw_text1(screen, "Qop", 65, WIDTH // 2, HEIGHT // 4)
+	draw_text1(screen, "Player 2 WINS", 20, WIDTH // 2, HEIGHT // 2)
+	draw_text1(screen, "Press Q", 20, WIDTH // 2, HEIGHT * 3/4)
+
+	pygame.display.flip()
+	waiting = True
+	while waiting:
+		clock.tick(60)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_q:
+					waiting = False
+
+background = pygame.transform.scale(pygame.image.load("img/fond.png").convert(), (1300,700))
+
+game_over1 = False
+game_over2 = False
+running = True
+start = True
+while running:
+	if game_over1:
+
+		show_game_over_screenp1()
+				
+		screen.blit(background,(0,0))
+		game_over1 = False
+				
+		all_sprites = pygame.sprite.Group()
+		frost_list = pygame.sprite.Group()
+		penguin1 = Penguin1()
+		penguin2 = Penguin2()
+		penguin3 = Penguin3()
+		penguin4 = Penguin4()
+		penguin5 = Penguin5()
+		penguin6 = Penguin6()
+		penguin7 = Penguin7()
+		penguin8 = Penguin8()
+		penguin9 = Penguin9()
+		all_sprites.add(penguin1, penguin2, penguin3, penguin4, penguin5, penguin6, penguin7, penguin8, penguin9)
+		player1 = Player1()
+		player2 = Player2()
+		all_sprites.add(player1, player2)
+		
+		frost1 = Frost1()
+		all_sprites.add(frost1)
+		frost_list.add(frost1)
+		start_time = pygame.time.get_ticks()
+
+	if game_over2:
+
+		show_game_over_screenp2()
+				
+		screen.blit(background,(0,0))
+		game_over2 = False
+		all_sprites = pygame.sprite.Group()
+		frost_list = pygame.sprite.Group()
+		penguin1 = Penguin1()
+		penguin2 = Penguin2()
+		penguin3 = Penguin3()
+		penguin4 = Penguin4()
+		penguin5 = Penguin5()
+		penguin6 = Penguin6()
+		penguin7 = Penguin7()
+		penguin8 = Penguin8()
+		penguin9 = Penguin9()
+		all_sprites.add(penguin1, penguin2, penguin3, penguin4, penguin5, penguin6, penguin7, penguin8, penguin9)
+		player1 = Player1()
+		player2 = Player2()
+		all_sprites.add(player1, player2)
+		
+		frost1 = Frost1()
+		all_sprites.add(frost1)
+		frost_list.add(frost1)
+		start_time = pygame.time.get_ticks()
+
+	if start:
+		show_go_screen()
+		
+		start = False
+		
+		screen.blit(background,(0,0))
+		all_sprites = pygame.sprite.Group()
+		frost_list = pygame.sprite.Group()
+		penguin1 = Penguin1()
+		penguin2 = Penguin2()
+		penguin3 = Penguin3()
+		penguin4 = Penguin4()
+		penguin5 = Penguin5()
+		penguin6 = Penguin6()
+		penguin7 = Penguin7()
+		penguin8 = Penguin8()
+		penguin9 = Penguin9()
+		all_sprites.add(penguin1, penguin2, penguin3, penguin4, penguin5, penguin6, penguin7, penguin8, penguin9)
+		player1 = Player1()
+		player2 = Player2()
+		all_sprites.add(player1, player2)
+				
+		frost1 = Frost1()
+		all_sprites.add(frost1)
+		frost_list.add(frost1)
+		start_time = pygame.time.get_ticks()
+		
+	clock.tick(60)
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False
+
+	now = (pygame.time.get_ticks() - start_time)//1000
+		
+	if player1.hp <= 0:
+		game_over2 = True
+	if player2.hp <= 0:
+		game_over1 = True
+	all_sprites.update()
+		
+	# Checar colisiones - penguin1 - frost
+	hits = pygame.sprite.spritecollide(penguin1, frost_list, False)
+	for hit in hits:
+		print(1)
+		if frost1.target == penguin1:
+			penguin1.counter = False
+			penguin1.hp -= 34
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+			
+	# Checar colisiones - penguin2 - frost
+	hits = pygame.sprite.spritecollide(penguin2, frost_list, False)
+	for hit in hits:
+		print(2)
+		if frost1.target == penguin2:
+			penguin2.counter = False
+			penguin2.hp -= 34
+			penguin1.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+
+	# Checar colisiones - penguin3 - frost
+	hits = pygame.sprite.spritecollide(penguin3, frost_list, False)
+	for hit in hits:
+		print(3)
+		if frost1.target == penguin3:
+			penguin3.counter = False
+			penguin3.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+
+	# Checar colisiones - penguin4 - frost
+	hits = pygame.sprite.spritecollide(penguin4, frost_list, False)
+	for hit in hits:
+		print(4)
+		if frost1.target == penguin4:
+			penguin4.counter = False
+			penguin4.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+
+	# Checar colisiones - penguin5 - frost
+	hits = pygame.sprite.spritecollide(penguin5, frost_list, False)
+	for hit in hits:
+		print(5)
+		if frost1.target == penguin5:
+			penguin5.counter = False
+			penguin5.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+		
+	# Checar colisiones - penguin6 - frost
+	hits = pygame.sprite.spritecollide(penguin6, frost_list, False)
+	for hit in hits:
+		print(6)
+		if frost1.target == penguin6:
+			penguin6.counter = False
+			penguin6.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+		
+	# Checar colisiones - penguin7 - frost
+	hits = pygame.sprite.spritecollide(penguin7, frost_list, False)
+	for hit in hits:
+		print(7)
+		if frost1.target == penguin7:
+			penguin7.counter = False
+			penguin7.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+		
+	# Checar colisiones - penguin8 - frost
+	hits = pygame.sprite.spritecollide(penguin8, frost_list, False)
+	for hit in hits:
+		print(8)
+		if frost1.target == penguin8:
+			penguin8.counter = False
+			penguin8.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+
+	# Checar colisiones - penguin9 - frost
+	hits = pygame.sprite.spritecollide(penguin9, frost_list, False)
+	for hit in hits:
+		print(9)
+		if frost1.target == penguin9:
+			penguin9.counter = False
+			penguin9.hp -= 34
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			player1.counter = True
+			player2.counter = True
+			frost1.hit = True
+
+	# Checar colisiones - player1 - frost
+	hits = pygame.sprite.spritecollide(player1, frost_list, False)
+	for hit in hits:
+		print(10)
+		if frost1.target == player1:
+			player1.counter = False
+			player1.hp -= 90
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player2.counter = True
+			frost1.hit = True
+		
+	# Checar colisiones - player2 - frost
+	hits = pygame.sprite.spritecollide(player2, frost_list, False)
+	for hit in hits:
+		print(11)
+		if frost1.target == player2:
+			player2.counter = False
+			player2.hp -= 90
+			penguin1.counter = True
+			penguin2.counter = True
+			penguin3.counter = True
+			penguin4.counter = True
+			penguin5.counter = True
+			penguin6.counter = True
+			penguin7.counter = True
+			penguin8.counter = True
+			penguin9.counter = True
+			player1.counter = True
+			frost1.hit = True
+		
+	screen.blit(background, [0, 0])
+
+	all_sprites.draw(screen)
+	
+	# Escudo.
+	draw_text1(screen, "P1", 20, 110, 6)
+	draw_text1(screen, "P2", 20, 400, 6)
+	
+	draw_hp_bar(screen, 120, 5, player1.hp//10)
+	draw_text2(screen, str(int(player1.hp)) + "/1000", 10, 170, 6)
+
+	draw_hp_bar(screen, 415, 5, player2.hp//10)
+	draw_text2(screen, str(int(player2.hp))+ "/1000", 10, 470, 6)
+
+	#reloj
+	draw_text1(screen, str((((pygame.time.get_ticks() - start_time)//60000)+(60))%(60))+":" + str((((pygame.time.get_ticks() - start_time)//1000)+(60))%(60)), 30, 570, 50)
+		
+	pygame.display.flip()
+pygame.quit()
