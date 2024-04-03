@@ -202,332 +202,75 @@ class Penguin(pygame.sprite.Sprite):
 		self.rect.x = randint(300,1000)
 		self.rect.y =  randint(80,550)
 
+	def update(self):
+		anow = pygame.time.get_ticks()
+		alist = [-2,2]
+		counter1 = True
+		counter2 = False
+		self.rect.x += self.speedx
+		self.rect.y += self.speedy
+		if self.hp < 0:
+			self.hp = 0
+		if self.hp == 0:
+			self.kill()
+		if self.rect.right > WIDTH:
+			self.rect.right = WIDTH
+		if self.rect.left < 300:
+			self.rect.left = 300
+		if self.rect.top < 50:
+			self.rect.top = 50
+		if self.rect.bottom > 550:
+			self.rect.bottom = 550
+		if counter1:
+			if anow % 4 == 0:
+				counter1 = False
+				self.speedx = random.choice(alist)
+				self.speedy = random.choice(alist)
+				counter2 = True
+		if counter2:
+			if anow % 10 == 0:
+				counter2 = False
+				self.speedx = 0
+				self.speedy = 0
+				counter2 = True
+
 class Penguin1(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin2(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin3(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin4(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin5(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin6(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin7(Penguin):
 	def __init__(self):
 		super().__init__()
-
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
 
 class Penguin8(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Penguin9(Penguin):
 	def __init__(self):
 		super().__init__()
 		
-	def update(self):
-		anow = pygame.time.get_ticks()
-		alist = [-2,2]
-		counter1 = True
-		counter2 = False
-		self.rect.x += self.speedx
-		self.rect.y += self.speedy
-		if self.hp < 0:
-			self.hp = 0
-		if self.hp == 0:
-			self.kill()
-		if self.rect.right > WIDTH:
-			self.rect.right = WIDTH
-		if self.rect.left < 300:
-			self.rect.left = 300
-		if self.rect.top < 50:
-			self.rect.top = 50
-		if self.rect.bottom > 550:
-			self.rect.bottom = 550
-		if counter1:
-			if anow % 4 == 0:
-				counter1 = False
-				self.speedx = random.choice(alist)
-				self.speedy = random.choice(alist)
-				counter2 = True
-		if counter2:
-			if anow % 10 == 0:
-				counter2 = False
-				self.speedx = 0
-				self.speedy = 0
-				counter2 = True
-
 class Frost1(pygame.sprite.Sprite):
-
 	def __init__(self):
 		super().__init__()
 		self.image = frost_images[0]
@@ -540,8 +283,6 @@ class Frost1(pygame.sprite.Sprite):
 		self.hit = True
 
 	def update(self):
-		#self.rect.x += self.speed
-		#self.rect.y += self.speed
 		if self.hit:
 			target_list = [player1, player2, player3, penguin1, penguin2, penguin3, 
 			penguin4, penguin5, penguin6, penguin7, penguin8, penguin9]
@@ -551,9 +292,7 @@ class Frost1(pygame.sprite.Sprite):
 				distance_list=[(0,self.target)]
 			self.target = sorted(distance_list, key=lambda x: x[0])[0][1]
 			self.hit = False
-		print(self.target)
 
-		#try:
 		if (self.target.rect.centerx - self.rect.centerx) == 0:
 			if self.target.rect.centery > self.rect.centery:
 				self.rect.centery += self.speed 
@@ -767,6 +506,8 @@ while running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			running = False
+			pygame.quit()
+			sys.exit()
 
 	now = (pygame.time.get_ticks() - start_time)//1000
 		
@@ -781,7 +522,6 @@ while running:
 	# Checar colisiones - penguin1 - frost
 	hits = pygame.sprite.spritecollide(penguin1, frost_list, False)
 	for hit in hits:
-		print(1)
 		if frost1.target == penguin1:
 			penguin1.counter = False
 			penguin1.hp -= 34
@@ -801,7 +541,6 @@ while running:
 	# Checar colisiones - penguin2 - frost
 	hits = pygame.sprite.spritecollide(penguin2, frost_list, False)
 	for hit in hits:
-		print(2)
 		if frost1.target == penguin2:
 			penguin2.counter = False
 			penguin2.hp -= 34
@@ -821,7 +560,6 @@ while running:
 	# Checar colisiones - penguin3 - frost
 	hits = pygame.sprite.spritecollide(penguin3, frost_list, False)
 	for hit in hits:
-		print(3)
 		if frost1.target == penguin3:
 			penguin3.counter = False
 			penguin3.hp -= 34
@@ -841,7 +579,6 @@ while running:
 	# Checar colisiones - penguin4 - frost
 	hits = pygame.sprite.spritecollide(penguin4, frost_list, False)
 	for hit in hits:
-		print(4)
 		if frost1.target == penguin4:
 			penguin4.counter = False
 			penguin4.hp -= 34
@@ -861,7 +598,6 @@ while running:
 	# Checar colisiones - penguin5 - frost
 	hits = pygame.sprite.spritecollide(penguin5, frost_list, False)
 	for hit in hits:
-		print(5)
 		if frost1.target == penguin5:
 			penguin5.counter = False
 			penguin5.hp -= 34
@@ -881,7 +617,6 @@ while running:
 	# Checar colisiones - penguin6 - frost
 	hits = pygame.sprite.spritecollide(penguin6, frost_list, False)
 	for hit in hits:
-		print(6)
 		if frost1.target == penguin6:
 			penguin6.counter = False
 			penguin6.hp -= 34
@@ -901,7 +636,6 @@ while running:
 	# Checar colisiones - penguin7 - frost
 	hits = pygame.sprite.spritecollide(penguin7, frost_list, False)
 	for hit in hits:
-		print(7)
 		if frost1.target == penguin7:
 			penguin7.counter = False
 			penguin7.hp -= 34
@@ -921,7 +655,6 @@ while running:
 	# Checar colisiones - penguin8 - frost
 	hits = pygame.sprite.spritecollide(penguin8, frost_list, False)
 	for hit in hits:
-		print(8)
 		if frost1.target == penguin8:
 			penguin8.counter = False
 			penguin8.hp -= 34
@@ -941,7 +674,6 @@ while running:
 	# Checar colisiones - penguin9 - frost
 	hits = pygame.sprite.spritecollide(penguin9, frost_list, False)
 	for hit in hits:
-		print(9)
 		if frost1.target == penguin9:
 			penguin9.counter = False
 			penguin9.hp -= 34
@@ -961,7 +693,6 @@ while running:
 	# Checar colisiones - player1 - frost
 	hits = pygame.sprite.spritecollide(player1, frost_list, False)
 	for hit in hits:
-		print(10)
 		if frost1.target == player1:
 			player1.counter = False
 			player1.hp -= 90
@@ -981,7 +712,6 @@ while running:
 	# Checar colisiones - player2 - frost
 	hits = pygame.sprite.spritecollide(player2, frost_list, False)
 	for hit in hits:
-		print(11)
 		if frost1.target == player2:
 			player2.counter = False
 			player2.hp -= 90
@@ -1001,7 +731,6 @@ while running:
 	# Checar colisiones - player3 - frost
 	hits = pygame.sprite.spritecollide(player3, frost_list, False)
 	for hit in hits:
-		print(12)
 		if frost1.target == player3:
 			player3.counter = False
 			player3.hp -= 90
@@ -1029,12 +758,25 @@ while running:
 	
 	draw_hp_bar(screen, 120, 5, player1.hp//10)
 	draw_text2(screen, str(int(player1.hp)) + "/1000", 10, 170, 6)
+	draw_hp_bar(screen, player1.rect.x, player1.rect.y, player1.hp//10)
 
 	draw_hp_bar(screen, 415, 5, player2.hp//10)
 	draw_text2(screen, str(int(player2.hp))+ "/1000", 10, 470, 6)
+	draw_hp_bar(screen, player2.rect.x, player2.rect.y, player2.hp//10)
 
 	draw_hp_bar(screen, 715, 5, player3.hp//10)
 	draw_text2(screen, str(int(player3.hp))+ "/1000", 10, 770, 6)
+	draw_hp_bar(screen, player3.rect.x, player3.rect.y, player3.hp//10)
+
+	draw_hp_bar(screen, penguin1.rect.x, penguin1.rect.y, penguin1.hp)
+	draw_hp_bar(screen, penguin2.rect.x, penguin2.rect.y, penguin2.hp)
+	draw_hp_bar(screen, penguin3.rect.x, penguin3.rect.y, penguin3.hp)
+	draw_hp_bar(screen, penguin4.rect.x, penguin4.rect.y, penguin4.hp)
+	draw_hp_bar(screen, penguin5.rect.x, penguin5.rect.y, penguin5.hp)
+	draw_hp_bar(screen, penguin6.rect.x, penguin6.rect.y, penguin6.hp)
+	draw_hp_bar(screen, penguin7.rect.x, penguin7.rect.y, penguin7.hp)
+	draw_hp_bar(screen, penguin8.rect.x, penguin8.rect.y, penguin8.hp)
+	draw_hp_bar(screen, penguin9.rect.x, penguin9.rect.y, penguin9.hp)
 
 	#reloj
 	draw_text1(screen, str((((pygame.time.get_ticks() - start_time)//60000)+(60))%(60))+":" + str((((pygame.time.get_ticks() - start_time)//1000)+(60))%(60)), 30, 570, 50)
