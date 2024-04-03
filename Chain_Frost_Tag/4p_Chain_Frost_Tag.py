@@ -31,7 +31,7 @@ def draw_text2(surface, text, size, x, y):
 	surface.blit(text_surface, text_rect)
 
 def draw_hp_bar(surface, x, y, percentage):
-	BAR_LENGHT = 100
+	BAR_LENGHT = 50
 	BAR_HEIGHT = 10
 	fill = (percentage / 100) * BAR_LENGHT
 	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
@@ -40,7 +40,7 @@ def draw_hp_bar(surface, x, y, percentage):
 	pygame.draw.rect(surface, WHITE, border, 2)
 
 def draw_hp_bar2(surface, x, y, percentage):
-	BAR_LENGHT = 100
+	BAR_LENGHT = 50
 	BAR_HEIGHT = 10
 	fill = (percentage / 100) * BAR_LENGHT
 	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
@@ -49,7 +49,7 @@ def draw_hp_bar2(surface, x, y, percentage):
 	pygame.draw.rect(surface, BROWN, border, 2)
 
 def draw_mana_bar(surface, x, y, percentage):
-	BAR_LENGHT = 100
+	BAR_LENGHT = 50
 	BAR_HEIGHT = 10
 	fill = (percentage / 100) * BAR_LENGHT
 	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
@@ -882,30 +882,43 @@ while running:
 	draw_text1(screen, "P4", 20, 1000, 6)
 
 	draw_hp_bar(screen, 120, 5, player1.hp//10)
-	draw_text2(screen, str(int(player1.hp)) + "/1000", 10, 170, 6)
-	draw_hp_bar(screen, player1.rect.x, player1.rect.y, player1.hp//10)
+	draw_text2(screen, str(int(player1.hp)) + "/1000", 10, 145, 6)
+	if player1.hp > 0:
+		draw_hp_bar(screen, player1.rect.x, player1.rect.y, player1.hp//10)
 
 	draw_hp_bar(screen, 415, 5, player2.hp//10)
-	draw_text2(screen, str(int(player2.hp))+ "/1000", 10, 470, 6)
-	draw_hp_bar(screen, player2.rect.x, player2.rect.y, player2.hp//10)
+	draw_text2(screen, str(int(player2.hp))+ "/1000", 10, 440, 6)
+	if player2.hp > 0:
+		draw_hp_bar(screen, player2.rect.x, player2.rect.y, player2.hp//10)
 
 	draw_hp_bar(screen, 715, 5, player3.hp//10)
-	draw_text2(screen, str(int(player3.hp))+ "/1000", 10, 770, 6)
-	draw_hp_bar(screen, player3.rect.x, player3.rect.y, player3.hp//10)
+	draw_text2(screen, str(int(player3.hp))+ "/1000", 10, 735, 6)
+	if player3.hp > 0:
+		draw_hp_bar(screen, player3.rect.x, player3.rect.y, player3.hp//10)
 
 	draw_hp_bar(screen, 1015, 5, player4.hp//10)
-	draw_text2(screen, str(int(player4.hp))+ "/1000", 10, 1070, 6)
-	draw_hp_bar(screen, player4.rect.x, player4.rect.y, player4.hp//10)
+	draw_text2(screen, str(int(player4.hp))+ "/1000", 10, 1035, 6)
+	if player4.hp > 0:
+		draw_hp_bar(screen, player4.rect.x, player4.rect.y, player4.hp//10)
 
-	draw_hp_bar(screen, penguin1.rect.x, penguin1.rect.y, penguin1.hp)
-	draw_hp_bar(screen, penguin2.rect.x, penguin2.rect.y, penguin2.hp)
-	draw_hp_bar(screen, penguin3.rect.x, penguin3.rect.y, penguin3.hp)
-	draw_hp_bar(screen, penguin4.rect.x, penguin4.rect.y, penguin4.hp)
-	draw_hp_bar(screen, penguin5.rect.x, penguin5.rect.y, penguin5.hp)
-	draw_hp_bar(screen, penguin6.rect.x, penguin6.rect.y, penguin6.hp)
-	draw_hp_bar(screen, penguin7.rect.x, penguin7.rect.y, penguin7.hp)
-	draw_hp_bar(screen, penguin8.rect.x, penguin8.rect.y, penguin8.hp)
-	draw_hp_bar(screen, penguin9.rect.x, penguin9.rect.y, penguin9.hp)
+	if penguin1.hp > 0:
+		draw_hp_bar(screen, penguin1.rect.x, penguin1.rect.y, penguin1.hp)
+	if penguin2.hp > 0:
+		draw_hp_bar(screen, penguin2.rect.x, penguin2.rect.y, penguin2.hp)
+	if penguin3.hp > 0:
+		draw_hp_bar(screen, penguin3.rect.x, penguin3.rect.y, penguin3.hp)
+	if penguin4.hp > 0:
+		draw_hp_bar(screen, penguin4.rect.x, penguin4.rect.y, penguin4.hp)
+	if penguin5.hp > 0:
+		draw_hp_bar(screen, penguin5.rect.x, penguin5.rect.y, penguin5.hp)
+	if penguin6.hp > 0:
+		draw_hp_bar(screen, penguin6.rect.x, penguin6.rect.y, penguin6.hp)
+	if penguin7.hp > 0:
+		draw_hp_bar(screen, penguin7.rect.x, penguin7.rect.y, penguin7.hp)
+	if penguin8.hp > 0:
+		draw_hp_bar(screen, penguin8.rect.x, penguin8.rect.y, penguin8.hp)
+	if penguin9.hp > 0:
+		draw_hp_bar(screen, penguin9.rect.x, penguin9.rect.y, penguin9.hp)
 	
 	#reloj
 	draw_text1(screen, str((((pygame.time.get_ticks() - start_time)//60000)+(60))%(60))+":" + str((((pygame.time.get_ticks() - start_time)//1000)+(60))%(60)), 30, 570, 50)
