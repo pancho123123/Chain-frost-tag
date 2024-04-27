@@ -41,7 +41,7 @@ def draw_hp_bar(surface, x, y, percentage):
 
 def draw_hp_bar2(surface, x, y, percentage):
 	BAR_LENGHT = 50
-	BAR_HEIGHT = 10
+	BAR_HEIGHT = 7
 	fill = (percentage / 100) * BAR_LENGHT
 	border = pygame.Rect(x, y, BAR_LENGHT, BAR_HEIGHT)
 	fill = pygame.Rect(x, y, fill, BAR_HEIGHT)
@@ -649,23 +649,23 @@ while running:
 		draw_hp_bar(screen, player2.rect.x, player2.rect.y, player2.hp//10)
 		
 	if penguin1.hp > 0:
-		draw_hp_bar(screen, penguin1.rect.x, penguin1.rect.y, penguin1.hp)
+		draw_hp_bar2(screen, penguin1.rect.x, penguin1.rect.y, penguin1.hp)
 	if penguin2.hp > 0:
-		draw_hp_bar(screen, penguin2.rect.x, penguin2.rect.y, penguin2.hp)
+		draw_hp_bar2(screen, penguin2.rect.x, penguin2.rect.y, penguin2.hp)
 	if penguin3.hp > 0:
-		draw_hp_bar(screen, penguin3.rect.x, penguin3.rect.y, penguin3.hp)
+		draw_hp_bar2(screen, penguin3.rect.x, penguin3.rect.y, penguin3.hp)
 	if penguin4.hp > 0:
-		draw_hp_bar(screen, penguin4.rect.x, penguin4.rect.y, penguin4.hp)
+		draw_hp_bar2(screen, penguin4.rect.x, penguin4.rect.y, penguin4.hp)
 	if penguin5.hp > 0:
-		draw_hp_bar(screen, penguin5.rect.x, penguin5.rect.y, penguin5.hp)
+		draw_hp_bar2(screen, penguin5.rect.x, penguin5.rect.y, penguin5.hp)
 	if penguin6.hp > 0:
-		draw_hp_bar(screen, penguin6.rect.x, penguin6.rect.y, penguin6.hp)
+		draw_hp_bar2(screen, penguin6.rect.x, penguin6.rect.y, penguin6.hp)
 	if penguin7.hp > 0:
-		draw_hp_bar(screen, penguin7.rect.x, penguin7.rect.y, penguin7.hp)
+		draw_hp_bar2(screen, penguin7.rect.x, penguin7.rect.y, penguin7.hp)
 	if penguin8.hp > 0:
-		draw_hp_bar(screen, penguin8.rect.x, penguin8.rect.y, penguin8.hp)
+		draw_hp_bar2(screen, penguin8.rect.x, penguin8.rect.y, penguin8.hp)
 	if penguin9.hp > 0:
-		draw_hp_bar(screen, penguin9.rect.x, penguin9.rect.y, penguin9.hp)
+		draw_hp_bar2(screen, penguin9.rect.x, penguin9.rect.y, penguin9.hp)
 
 	#reloj
 	draw_text1(screen, str((((pygame.time.get_ticks() - start_time)//60000)+(60))%(60))+":" + str((((pygame.time.get_ticks() - start_time)//1000)+(60))%(60)), 30, 570, 50)
