@@ -395,6 +395,9 @@ def show_game_over_screenp3():
 				if event.key == pygame.K_q:
 					waiting = False
 
+chain_frost_sound1 = pygame.mixer.Sound("sound/chain_frost.wav")
+chain_frost_sound2 = pygame.mixer.Sound("sound/chain_frost2.wav")
+
 background = pygame.transform.scale(pygame.image.load("img/fond.png").convert(), (1300,700))
 
 game_over1 = False
@@ -428,6 +431,7 @@ while running:
 		all_sprites.add(player1, player2, player3)
 		
 		frost1 = Frost1()
+		chain_frost_sound1.play()
 		all_sprites.add(frost1)
 		frost_list.add(frost1)
 		start_time = pygame.time.get_ticks()
@@ -456,6 +460,7 @@ while running:
 		all_sprites.add(player1, player2, player3)
 		
 		frost1 = Frost1()
+		chain_frost_sound1.play()
 		all_sprites.add(frost1)
 		frost_list.add(frost1)
 		start_time = pygame.time.get_ticks()
@@ -484,6 +489,7 @@ while running:
 		all_sprites.add(player1, player2, player3)
 		
 		frost1 = Frost1()
+		chain_frost_sound1.play()
 		all_sprites.add(frost1)
 		frost_list.add(frost1)
 		start_time = pygame.time.get_ticks()
@@ -512,6 +518,7 @@ while running:
 		all_sprites.add(player1, player2, player3)
 				
 		frost1 = Frost1()
+		chain_frost_sound1.play()
 		all_sprites.add(frost1)
 		frost_list.add(frost1)
 		start_time = pygame.time.get_ticks()
@@ -537,6 +544,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin1, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin1:
+			chain_frost_sound2.play()
 			penguin1.counter = False
 			penguin1.hp -= 34
 			penguin2.counter = True
@@ -556,6 +564,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin2, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin2:
+			chain_frost_sound2.play()
 			penguin2.counter = False
 			penguin2.hp -= 34
 			penguin1.counter = True
@@ -575,6 +584,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin3, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin3:
+			chain_frost_sound2.play()
 			penguin3.counter = False
 			penguin3.hp -= 34
 			penguin1.counter = True
@@ -594,6 +604,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin4, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin4:
+			chain_frost_sound2.play()
 			penguin4.counter = False
 			penguin4.hp -= 34
 			penguin1.counter = True
@@ -613,6 +624,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin5, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin5:
+			chain_frost_sound2.play()
 			penguin5.counter = False
 			penguin5.hp -= 34
 			penguin1.counter = True
@@ -632,6 +644,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin6, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin6:
+			chain_frost_sound2.play()
 			penguin6.counter = False
 			penguin6.hp -= 34
 			penguin1.counter = True
@@ -651,6 +664,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin7, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin7:
+			chain_frost_sound2.play()
 			penguin7.counter = False
 			penguin7.hp -= 34
 			penguin1.counter = True
@@ -670,6 +684,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin8, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin8:
+			chain_frost_sound2.play()
 			penguin8.counter = False
 			penguin8.hp -= 34
 			penguin1.counter = True
@@ -689,6 +704,7 @@ while running:
 	hits = pygame.sprite.spritecollide(penguin9, frost_list, False)
 	for hit in hits:
 		if frost1.target == penguin9:
+			chain_frost_sound2.play()
 			penguin9.counter = False
 			penguin9.hp -= 34
 			penguin1.counter = True
@@ -708,6 +724,7 @@ while running:
 	hits = pygame.sprite.spritecollide(player1, frost_list, False)
 	for hit in hits:
 		if frost1.target == player1:
+			chain_frost_sound2.play()
 			player1.counter = False
 			player1.hp -= 90
 			penguin1.counter = True
@@ -727,6 +744,7 @@ while running:
 	hits = pygame.sprite.spritecollide(player2, frost_list, False)
 	for hit in hits:
 		if frost1.target == player2:
+			chain_frost_sound2.play()
 			player2.counter = False
 			player2.hp -= 90
 			penguin1.counter = True
@@ -746,6 +764,7 @@ while running:
 	hits = pygame.sprite.spritecollide(player3, frost_list, False)
 	for hit in hits:
 		if frost1.target == player3:
+			chain_frost_sound2.play()
 			player3.counter = False
 			player3.hp -= 90
 			penguin1.counter = True
