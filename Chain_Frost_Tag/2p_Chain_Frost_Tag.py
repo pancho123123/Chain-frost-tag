@@ -255,7 +255,7 @@ class Frost1(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.centerx = 700
 		self.rect.centery = 266
-		self.speed = 5
+		self.speed = 4
 		self.target = None
 		self.hit = True
 
