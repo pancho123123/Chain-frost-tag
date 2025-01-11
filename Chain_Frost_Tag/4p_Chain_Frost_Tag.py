@@ -230,7 +230,7 @@ class Penguin(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.image = pygame.transform.scale(pygame.image.load("img/penguin.png").convert(),(65,65))
-		self.image.set_colorkey(BLACK)
+		self.image.set_colorkey(WHITE)
 		self.rect = self.image.get_rect()
 		self.rect.x = random.randrange(300,1000)
 		self.rect.y = random.randrange(200,650)
